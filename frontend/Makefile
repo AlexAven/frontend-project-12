@@ -1,11 +1,14 @@
 install:
 	npm ci
 
+dev:
+	npx vite
+
 start:
-	npm start
+	npx start-server -s ./dist
 
 build:
-	npm build
+	npm run build
 
 lint:
-	npx eslint --ext js,jsx --no-eslintrc --config .eslintrc.yml .
+	npx eslint .
