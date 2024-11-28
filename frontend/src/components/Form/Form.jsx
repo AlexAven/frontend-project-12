@@ -1,27 +1,51 @@
-import { Formik, Form } from 'formik';
-import Input from '../Input/Input';
-import * as Yup from 'yup';
-
-const validationSchema = Yup.object().shape({
-  nickname: Yup.string().required('Nickname is required'),
-  password: Yup.string().required('Password is required'),
-});
+import { useFormik } from 'formik';
 
 const CustomForm = () => {
+  const formik = useFormik({
+    initialValues: {
+      username: '',
+      password: '',
+    },
+    onSubmit: (values) => {
+      console.log(JSON.stringify(values, null, 2));
+    },
+  });
   return (
-    <Formik
-      initialValues={{ nickname: '', password: '' }}
-      validationSchema={validationSchema}
-      onSubmit={() => console.log('boom!')}
-    >
-      <Form action="" className="form">
-        <Input name="nickname" id="nickname" placeholder="Ваш ник" />
-        <Input name="password" id="password" placeholder="Пароль" />
-        <button type="submit" className="w-100 mb-3 btn btn-outline-primary">
-          Войти
-        </button>
-      </Form>
-    </Formik>
+    <form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-md-0">
+      <h1 className="text-center mb-4">Войти</h1>
+      <div className="form-floating mb-3">
+        <input
+          name="username"
+          autoComplete="username"
+          required={true}
+          placeholder="Ваш ник"
+          id="username"
+          className="form-control"
+          onChange={formik.handleChange}
+          value={formik.values.username}
+        />
+        <label htmlFor="username">Ваш ник</label>
+      </div>
+      <div className="form-floating mb-4">
+        <input
+          name="password"
+          autoComplete="current-password"
+          required={true}
+          placeholder="Пароль"
+          type="password"
+          id="password"
+          className="form-control"
+          onChange={formik.handleChange}
+          value={formik.values.password}
+        />
+        <label className="form-label" htmlFor="password">
+          Пароль
+        </label>
+      </div>
+      <button type="submit" className="w-100 mb-5 btn btn-outline-primary">
+        Войти
+      </button>
+    </form>
   );
 };
 
