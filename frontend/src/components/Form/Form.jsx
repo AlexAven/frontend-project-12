@@ -1,13 +1,17 @@
+import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 
+import { loginUser } from '../../features/loginSlice';
+
 const CustomForm = () => {
+  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
       username: '',
       password: '',
     },
     onSubmit: (values) => {
-      console.log(JSON.stringify(values, null, 2));
+      dispatch(loginUser(values));
     },
   });
   return (

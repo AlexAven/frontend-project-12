@@ -1,6 +1,21 @@
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
 import Form from '../../components/Form/Form';
 
 const LoginPage = () => {
+  const token = useSelector((state) => state.entities?.currentUser.token);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // const token = localStorage.getItem('token');
+    if (token) {
+    // if (token) {
+      navigate('/');
+    }
+  }, [navigate, token]);
+
   return (
     <div className="row justify-content-center align-content-center h-100">
       <div className="col-12 col-md-8 col-xxl-6">

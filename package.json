@@ -9,6 +9,7 @@
   "author": "Alexander Kazakov",
   "license": "ISC",
   "dependencies": {
-    "@hexlet/chat-server": "^2.0.4"
+    "@hexlet/chat-server": "^2.0.4",
+    "axios": "^1.7.8"
   }
 }
