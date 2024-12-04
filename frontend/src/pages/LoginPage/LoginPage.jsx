@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+
 import Form from '../../components/Form/Form';
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const token = useSelector((state) => state.login.entities?.token);
-  console.log('token', token);
   const fromPage = location.state?.from?.pathname || '/';
 
   useEffect(() => {
