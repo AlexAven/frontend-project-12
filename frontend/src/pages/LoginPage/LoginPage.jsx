@@ -1,20 +1,20 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-
 import Form from '../../components/Form/Form';
 
 const LoginPage = () => {
-  const token = useSelector((state) => state.entities?.currentUser.token);
   const navigate = useNavigate();
+  const location = useLocation();
+  const token = useSelector((state) => state.login.entities?.token);
+  console.log('token', token);
+  const fromPage = location.state?.from?.pathname || '/';
 
   useEffect(() => {
-    // const token = localStorage.getItem('token');
     if (token) {
-    // if (token) {
-      navigate('/');
+      navigate(fromPage, { replace: true });
     }
-  }, [navigate, token]);
+  }, [token, navigate, fromPage]);
 
   return (
     <div className="row justify-content-center align-content-center h-100">
@@ -23,9 +23,7 @@ const LoginPage = () => {
           <div className="card-body row m-0 pt-4 px-0 pb-0">
             <div className="row align-items-center justify-content-center">
               <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
-                <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
-                  <img className="rounded-circle" src="./src/assets/login.jpg" alt="login" />
-                </div>
+                <img className="rounded-circle" src="./src/assets/login.jpg" alt="login" />
               </div>
               <Form />
             </div>

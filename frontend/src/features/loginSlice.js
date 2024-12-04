@@ -21,7 +21,7 @@ const loginSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, { payload }) => {
-      state.entities.currentUser = payload;
+      state.entities.token = payload;
     },
   },
   extraReducers: (builder) => {
@@ -31,7 +31,7 @@ const loginSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, { payload }) => {
         localStorage.setItem('token', payload.token);
-        state.entities.currentUser = payload;
+        state.entities.token = payload.token;
         state.error = null;
       });
   },

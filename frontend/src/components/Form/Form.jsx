@@ -1,10 +1,11 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 
 import { loginUser } from '../../features/loginSlice';
 
 const CustomForm = () => {
   const dispatch = useDispatch();
+  const error = useSelector((state) => state.login.error);
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -24,7 +25,7 @@ const CustomForm = () => {
           required={true}
           placeholder="Ваш ник"
           id="username"
-          className="form-control"
+          className={`form-control ${error ? 'is-invalid' : ''}`}
           onChange={formik.handleChange}
           value={formik.values.username}
         />
@@ -38,13 +39,14 @@ const CustomForm = () => {
           placeholder="Пароль"
           type="password"
           id="password"
-          className="form-control"
+          className={`form-control ${error ? 'is-invalid' : ''}`}
           onChange={formik.handleChange}
           value={formik.values.password}
         />
         <label className="form-label" htmlFor="password">
           Пароль
         </label>
+        {error && <div className="invalid-feedback">{error}</div>}
       </div>
       <button type="submit" className="w-100 mb-5 btn btn-outline-primary">
         Войти
