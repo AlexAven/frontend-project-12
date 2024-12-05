@@ -10,10 +10,7 @@ const initialState = {
     entities: {},
     ids: [],
   },
-  ui: {
-    channels: {
-    },
-  },
+  ui: {},
   error: null,
 };
 
