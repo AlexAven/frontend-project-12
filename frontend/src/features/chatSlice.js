@@ -10,7 +10,9 @@ const initialState = {
     entities: {},
     ids: [],
   },
-  ui: {},
+  ui: {
+    activeChannelIndex: 0,
+  },
   error: null,
 };
 
@@ -40,7 +42,11 @@ export const getMessages = createAsyncThunk('@@chat/get-messages', async (_, { g
 const chatSlice = createSlice({
   name: '@@channels',
   initialState,
-  reducers: {},
+  reducers: {
+    setActiveChannel: (state, { payload }) => {
+      state.ui.activeChannelIndex = payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getChannels.rejected, (state, { error }) => {
@@ -67,4 +73,4 @@ const chatSlice = createSlice({
 });
 
 export default chatSlice.reducer;
-export const {} = chatSlice.actions;
+export const { setActiveChannel } = chatSlice.actions;

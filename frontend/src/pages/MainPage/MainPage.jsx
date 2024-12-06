@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { setUser } from '../../features/loginSlice';
 import { getChannels, getMessages } from '../../features/chatSlice';
 import Channels from '../../components/Channels/Channels';
+import Chat from '../../components/Chat/Chat';
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -35,13 +36,7 @@ const MainPage = () => {
         </div>
         <div className="col p-0 h-100">
           <div className="d-flex flex-column h-100">
-            <div className="bg-light mb-4 p-3 shadow-sm small">
-              <p className="m-0">
-                <b>??????????????# general</b>
-              </p>
-              <span className="text-muted">???? сообщений</span>
-            </div>
-            <div id="messages-box" className="chat-messages overflow-auto px-5 "></div>
+            <Chat />
             <div className="mt-auto px-5 py-3">
               <form noValidate="" className="py-1 border rounded-2">
                 <div className="input-group has-validation">
