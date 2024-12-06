@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Layout from '../components/Layout/Layout';
 import MainPage from '../pages/MainPage/MainPage';
 import LoginPage from '../pages/LoginPage/LoginPage';
-import NotFoundPage from '../pages/Notfoundpage/NotfoundPage';
+import NotFoundPage from '../pages/NotFoundPage/NotFoundPage';
 import RequireAuth from '../components/hoc/RequireAuth';
 
 const App = () => {
