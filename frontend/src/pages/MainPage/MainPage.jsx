@@ -1,4 +1,4 @@
-import { CgAddR as AddBtn, CgArrowRightR as SubmitBtn } from 'react-icons/cg';
+import { CgAddR as AddBtn } from 'react-icons/cg';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +7,7 @@ import { setUser } from '../../features/loginSlice';
 import { getChannels, getMessages } from '../../features/chatSlice';
 import Channels from '../../components/Channels/Channels';
 import Chat from '../../components/Chat/Chat';
+import Input from '../../components/Input/Input';
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -37,23 +38,7 @@ const MainPage = () => {
         <div className="col p-0 h-100">
           <div className="d-flex flex-column h-100">
             <Chat />
-            <div className="mt-auto px-5 py-3">
-              <form noValidate="" className="py-1 border rounded-2">
-                <div className="input-group has-validation">
-                  {/* <input
-                    name="body"
-                    aria-label="Новое сообщение"
-                    placeholder="Введите сообщение..."
-                    className="border-0 p-0 ps-2 form-control"
-                    value=""
-                  /> */}
-                  <button type="submit" disabled="" className="btn btn-group-vertical">
-                    <SubmitBtn size={'1.5rem'} />
-                    <span className="visually-hidden">Отправить</span>
-                  </button>
-                </div>
-              </form>
-            </div>
+            <Input />
           </div>
         </div>
       </div>

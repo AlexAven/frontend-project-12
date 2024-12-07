@@ -32,6 +32,7 @@ const loginSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, { payload }) => {
         localStorage.setItem('token', payload.token);
         state.entities.token = payload.token;
+        state.entities.username = payload.username;
         state.error = null;
       });
   },

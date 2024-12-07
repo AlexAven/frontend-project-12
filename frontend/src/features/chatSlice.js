@@ -39,6 +39,27 @@ export const getMessages = createAsyncThunk('@@chat/get-messages', async (_, { g
   return data;
 });
 
+export const postMessage = createAsyncThunk('@@chat/send-message', async (userMessage, { getState }) => {
+  const loginState = getState().login;
+  const chatState = getState().chat;
+  const activeChannelIndex = chatState.ui.activeChannelIndex;
+  const currentChannelId = chatState.channels.ids[activeChannelIndex];
+  const { token, username } = loginState.entities;
+
+  const newMessage = { body: userMessage, channelId: currentChannelId, username };
+
+  const res = await axios.post('/api/v1/messages', newMessage, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const data = res.data;
+
+  console.log('data', data);
+  return data;
+});
+
 const chatSlice = createSlice({
   name: '@@channels',
   initialState,
@@ -68,6 +89,13 @@ const chatSlice = createSlice({
           state.messages.ids.push(message.id);
         });
         state.error = null;
+      })
+      .addCase(postMessage.rejected, (state, { error }) => {
+        state.error = error.message;
+      })
+      .addCase(postMessage.fulfilled, (state, { payload }) => {
+        state.messages.entities[payload.id] = payload;
+        state.messages.ids.push(payload.id);
       });
   },
 });
