@@ -21,7 +21,8 @@ const loginSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, { payload }) => {
-      state.entities.token = payload;
+      state.entities.token = payload.token;
+      state.entities.username = payload.username;
     },
   },
   extraReducers: (builder) => {
@@ -30,7 +31,7 @@ const loginSlice = createSlice({
         state.error = error.message;
       })
       .addCase(loginUser.fulfilled, (state, { payload }) => {
-        localStorage.setItem('token', payload.token);
+        localStorage.setItem('userData', JSON.stringify(payload));
         state.entities.token = payload.token;
         state.entities.username = payload.username;
         state.error = null;

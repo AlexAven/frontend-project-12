@@ -34,7 +34,7 @@ const Chat = () => {
             const { id, username, body } = message;
             return (
               <div key={id} className="text-break mb-2">
-                <b>{username}</b>:{body}
+                <b>{username}:</b> {body}
               </div>
             );
           })}

@@ -14,11 +14,12 @@ const MainPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const StorageToken = localStorage.getItem('token');
+    const userData = JSON.parse(localStorage.getItem('userData'));
+    const StorageToken = userData.token;
     if (!StorageToken) {
       navigate('/login');
     }
-    dispatch(setUser(StorageToken));
+    dispatch(setUser(userData));
     dispatch(getChannels());
     dispatch(getMessages());
   }, [navigate, dispatch]);
