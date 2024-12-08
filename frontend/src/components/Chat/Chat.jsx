@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { io } from 'socket.io-client';
+import { receiveMessage } from '../../features/chatSlice';
 
 const Chat = () => {
   const dispatch = useDispatch();
@@ -14,9 +16,16 @@ const Chat = () => {
   const channelMessages = channelMessagesIndex.map((id) => chatState.messages.entities[id]);
   const messagesCounter = channelMessagesIndex.length;
 
-  // useEffect(() => {
-  //   const socket = new WebSocket();
-  // });
+  useEffect(() => {
+    const socket = io();
+    socket.on('newMessage', (payload) => {
+      dispatch(receiveMessage(payload));
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, [dispatch]);
 
   return (
     <>
@@ -29,8 +38,6 @@ const Chat = () => {
       <div id="messages-box" className="chat-messages overflow-auto px-5">
         {channelMessages &&
           channelMessages.map((message) => {
-            console.log('message', message);
-
             const { id, username, body } = message;
             return (
               <div key={id} className="text-break mb-2">

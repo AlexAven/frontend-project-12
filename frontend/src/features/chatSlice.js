@@ -39,26 +39,36 @@ export const getMessages = createAsyncThunk('@@chat/get-messages', async (_, { g
   return data;
 });
 
-export const postMessage = createAsyncThunk('@@chat/send-message', async (userMessage, { getState }) => {
-  const loginState = getState().login;
-  const chatState = getState().chat;
-  const activeChannelIndex = chatState.ui.activeChannelIndex;
-  const currentChannelId = chatState.channels.ids[activeChannelIndex];
-  const { token, username } = loginState.entities;
+export const postMessage = createAsyncThunk(
+  '@@chat/send-message',
+  async (userMessage, { getState, rejectWithValue }) => {
+    try {
+      const loginState = getState().login;
+      const chatState = getState().chat;
+      const activeChannelIndex = chatState.ui.activeChannelIndex;
+      const currentChannelId = chatState.channels.ids[activeChannelIndex];
+      const { token, username } = loginState.entities;
 
-  const newMessage = { body: userMessage, channelId: currentChannelId, username };
+      const newMessage = { body: userMessage, channelId: currentChannelId, username };
 
-  const res = await axios.post('/api/v1/messages', newMessage, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+      const res = await axios.post('/api/v1/messages', newMessage, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-  const data = res.data;
-
-  console.log('data', data);
-  return data;
-});
+      return res.data;
+    } catch (error) {
+      if (error.response) {
+        return rejectWithValue(error.response.data);
+      } else if (error.request) {
+        return rejectWithValue('Network error. Please check your connection.');
+      } else {
+        return rejectWithValue('Unexpected error occurred.');
+      }
+    }
+  },
+);
 
 const chatSlice = createSlice({
   name: '@@channels',
@@ -66,6 +76,10 @@ const chatSlice = createSlice({
   reducers: {
     setActiveChannel: (state, { payload }) => {
       state.ui.activeChannelIndex = payload;
+    },
+    receiveMessage: (state, { payload }) => {
+      state.messages.entities[payload.id] = payload;
+      state.messages.ids.push(payload.id);
     },
   },
   extraReducers: (builder) => {
@@ -90,15 +104,10 @@ const chatSlice = createSlice({
         });
         state.error = null;
       })
-      .addCase(postMessage.rejected, (state, { error }) => {
-        state.error = error.message;
-      })
-      .addCase(postMessage.fulfilled, (state, { payload }) => {
-        state.messages.entities[payload.id] = payload;
-        state.messages.ids.push(payload.id);
+      .addCase(postMessage.rejected, (state, { payload }) => {
+        state.error = payload || 'Failed to send message due to unknown error.';
       });
   },
 });
-
 export default chatSlice.reducer;
-export const { setActiveChannel } = chatSlice.actions;
+export const { setActiveChannel, receiveMessage } = chatSlice.actions;
