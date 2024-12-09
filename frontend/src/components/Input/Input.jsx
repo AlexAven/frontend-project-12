@@ -1,3 +1,4 @@
+import { useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 
@@ -6,20 +7,31 @@ import { postMessage } from '../../features/chatSlice';
 
 const Input = () => {
   const dispatch = useDispatch();
+  const messageInputRef = useRef(null);
+
   const formik = useFormik({
     initialValues: {
       message: '',
     },
     onSubmit: (values) => {
       if (formik.values.message.trim() !== '') {
-        const messageInput = document.querySelector('#message');
+        const messageInput = messageInputRef.current;
         messageInput.disabled = true;
-        dispatch(postMessage(values.message)).finally(() => (messageInput.disabled = false));
+        dispatch(postMessage(values.message)).finally(() => {
+          messageInput.disabled = false;
+          messageInput.focus();
+        });
         formik.values.message = '';
         messageInput.value = '';
       }
     },
   });
+
+  useEffect(() => {
+    if (messageInputRef.current) {
+      messageInputRef.current.focus();
+    }
+  }, []);
 
   return (
     <div className="mt-auto px-5 py-3">
@@ -33,6 +45,7 @@ const Input = () => {
             className="border-0 p-0 ps-2 form-control"
             onChange={formik.handleChange}
             value={formik.values.message}
+            ref={messageInputRef}
           />
           <button type="submit" disabled="" className="btn btn-group-vertical">
             <SubmitBtn size={'1.5rem'} />

@@ -8,6 +8,7 @@ import { getChannels, getMessages } from '../../features/chatSlice';
 import Channels from '../../components/Channels/Channels';
 import Chat from '../../components/Chat/Chat';
 import Input from '../../components/Input/Input';
+import Modal from '../../components/Modal/Modal';
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -30,7 +31,12 @@ const MainPage = () => {
         <div className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">
           <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
             <b>Каналы</b>
-            <button type="button" className="p-0 text-primary btn btn-group-vertical">
+            <button
+              type="button"
+              data-bs-toggle="modal"
+              data-bs-target="#addChannel"
+              className="p-0 text-primary btn btn-group-vertical"
+            >
               <AddBtn size={'1.6rem'} />
             </button>
           </div>
@@ -43,6 +49,7 @@ const MainPage = () => {
           </div>
         </div>
       </div>
+      <Modal />
     </div>
   );
 };
