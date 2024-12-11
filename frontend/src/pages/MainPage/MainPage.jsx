@@ -4,11 +4,11 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { setUser } from '../../features/loginSlice';
-import { getChannels, getMessages, openModal } from '../../features/chatSlice';
+import { getChannels, getMessages, openAddChannelModal } from '../../features/chatSlice';
 import Channels from '../../components/Channels/Channels';
 import Chat from '../../components/Chat/Chat';
 import Input from '../../components/Input/Input';
-import Modal from '../../components/Modal/Modal';
+import AddChannelModal from '../../components/modals/AddChannelModal';
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ const MainPage = () => {
   }, [navigate, dispatch]);
 
   const handleOpenModal = () => {
-    dispatch(openModal());
+    dispatch(openAddChannelModal());
   };
 
   return (
@@ -52,7 +52,7 @@ const MainPage = () => {
           </div>
         </div>
       </div>
-      <Modal />
+      <AddChannelModal />
     </div>
   );
 };

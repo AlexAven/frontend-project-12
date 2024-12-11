@@ -114,13 +114,14 @@
 
 // export default Modal;
 
+import * as yup from 'yup';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useFormik } from 'formik';
-import * as yup from 'yup';
-
+import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { addingChannelSucceeded, addingChannelFailed } from '../../features/validationSlice';
-import { closeModal } from '../../features/chatSlice';
+import { closeAddChannelModal } from '../../features/chatSlice';
 
 const AddChannelModal = () => {
   const dispatch = useDispatch();
@@ -129,7 +130,7 @@ const AddChannelModal = () => {
   const channels = useSelector((state) => state.chat.channels.entities);
   const channelNames = channelIds.map((id) => channels[id].name);
 
-  const isOpen = useSelector((state) => state.chat.ui.modal.isOpen);
+  const isOpen = useSelector((state) => state.chat.ui.modals.addChannel.isOpen);
 
   const schema = yup.object().shape({
     name: yup.string().required().min(3).max(20).notOneOf(channelNames),
@@ -144,7 +145,6 @@ const AddChannelModal = () => {
         .validate(values)
         .then(() => {
           dispatch(addingChannelSucceeded(values));
-          formik.resetForm();
           handleClose();
         })
         .catch((error) => dispatch(addingChannelFailed(error)));
@@ -152,8 +152,17 @@ const AddChannelModal = () => {
   });
 
   const handleClose = () => {
-    dispatch(closeModal());
+    dispatch(closeAddChannelModal());
+    formik.resetForm();
   };
+
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (isOpen && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isOpen]);
 
   return (
     <Modal show={isOpen} onHide={handleClose} centered>
@@ -170,6 +179,7 @@ const AddChannelModal = () => {
               isInvalid={validation.status === 'failed'}
               value={formik.values.name}
               onChange={formik.handleChange}
+              ref={inputRef}
             />
             <Form.Control.Feedback type="invalid">{validation.error}</Form.Control.Feedback>
           </Form.Group>
