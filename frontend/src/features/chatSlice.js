@@ -16,6 +16,9 @@ const initialState = {
       addChannel: {
         isOpen: false,
       },
+      deleteChannel: {
+        isOpen: false,
+      },
     },
   },
   error: null,
@@ -103,6 +106,12 @@ const chatSlice = createSlice({
     closeAddChannelModal: (state) => {
       state.ui.modals.addChannel.isOpen = false;
     },
+    openDeleteChannelModal: (state) => {
+      state.ui.modals.deleteChannel.isOpen = true;
+    },
+    closeDeleteChannelModal: (state) => {
+      state.ui.modals.deleteChannel.isOpen = false;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -144,5 +153,11 @@ const chatSlice = createSlice({
   },
 });
 export default chatSlice.reducer;
-export const { setActiveChannel, receiveMessage, openAddChannelModal, closeAddChannelModal } =
-  chatSlice.actions;
+export const {
+  setActiveChannel,
+  receiveMessage,
+  openAddChannelModal,
+  closeAddChannelModal,
+  openDeleteChannelModal,
+  closeDeleteChannelModal,
+} = chatSlice.actions;

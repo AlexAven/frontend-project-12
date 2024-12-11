@@ -1,11 +1,17 @@
 import { Dropdown, ButtonGroup, Button } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
-import { setActiveChannel } from '../../features/chatSlice';
+
+import { openDeleteChannelModal, setActiveChannel } from '../../features/chatSlice';
+import DeleteChannelModal from '../modals/DeleteChannelModal';
 
 const Channels = () => {
   const dispatch = useDispatch();
   const channels = useSelector((state) => state.chat.channels);
   const activeChannel = useSelector((state) => state.chat.ui.activeChannelIndex);
+
+  const handleOpenModal = () => {
+    dispatch(openDeleteChannelModal());
+  };
 
   return (
     <ul className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
@@ -34,7 +40,9 @@ const Channels = () => {
                 />
 
                 <Dropdown.Menu>
-                  <Dropdown.Item href="#">Удалить</Dropdown.Item>
+                  <Dropdown.Item onClick={handleOpenModal} href="#">
+                    Удалить
+                  </Dropdown.Item>
                   <Dropdown.Item href="#">Переименовать</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
@@ -48,6 +56,7 @@ const Channels = () => {
                 {name}
               </Button>
             )}
+            <DeleteChannelModal />
           </li>
         );
       })}
