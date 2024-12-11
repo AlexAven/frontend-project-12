@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { setUser } from '../../features/loginSlice';
-import { getChannels, getMessages } from '../../features/chatSlice';
+import { getChannels, getMessages, openModal } from '../../features/chatSlice';
 import Channels from '../../components/Channels/Channels';
 import Chat from '../../components/Chat/Chat';
 import Input from '../../components/Input/Input';
@@ -25,6 +25,10 @@ const MainPage = () => {
     dispatch(getMessages());
   }, [navigate, dispatch]);
 
+  const handleOpenModal = () => {
+    dispatch(openModal());
+  };
+
   return (
     <div className="container h-100 my-4 overflow-hidden rounded shadow">
       <div className="row h-100 bg-white flex-md-row">
@@ -33,9 +37,8 @@ const MainPage = () => {
             <b>Каналы</b>
             <button
               type="button"
-              data-bs-toggle="modal"
-              data-bs-target="#addChannel"
               className="p-0 text-primary btn btn-group-vertical"
+              onClick={handleOpenModal}
             >
               <AddBtn size={'1.6rem'} />
             </button>

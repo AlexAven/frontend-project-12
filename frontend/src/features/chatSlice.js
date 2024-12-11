@@ -12,6 +12,9 @@ const initialState = {
   },
   ui: {
     activeChannelIndex: 0,
+    modal: {
+      isOpen: false,
+    },
   },
   error: null,
 };
@@ -81,6 +84,12 @@ const chatSlice = createSlice({
       state.messages.entities[payload.id] = payload;
       state.messages.ids.push(payload.id);
     },
+    openModal: (state) => {
+      state.ui.modal.isOpen = true;
+    },
+    closeModal: (state) => {
+      state.ui.modal.isOpen = false;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -110,4 +119,4 @@ const chatSlice = createSlice({
   },
 });
 export default chatSlice.reducer;
-export const { setActiveChannel, receiveMessage } = chatSlice.actions;
+export const { setActiveChannel, receiveMessage, openModal, closeModal } = chatSlice.actions;
