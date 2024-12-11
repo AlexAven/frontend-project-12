@@ -1,15 +1,21 @@
 import { Modal, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { closeDeleteChannelModal } from '../../features/chatSlice';
+import { closeDeleteChannelModal, deleteChannel } from '../../features/chatSlice';
 
 const DeleteChannelModal = () => {
   const dispatch = useDispatch();
 
+  const id = useSelector((state) => state.chat.ui.modals.deleteChannel.channelId);
   const isOpen = useSelector((state) => state.chat.ui.modals.deleteChannel.isOpen);
 
   const handleClose = () => {
     dispatch(closeDeleteChannelModal());
+  };
+
+  const handleDelete = (id) => {
+    dispatch(deleteChannel(id));
+    handleClose();
   };
 
   return (
@@ -18,13 +24,20 @@ const DeleteChannelModal = () => {
         <Modal.Title>Удалить канал</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <span>Вы уверены?</span>
+        <h5>Уверены?</h5>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
+        <Button onClick={handleClose} variant="secondary">
           Отменить
         </Button>
-        <Button variant="primary">Отправить</Button>
+        <Button
+          onClick={() => {
+            handleDelete(id);
+          }}
+          variant="danger"
+        >
+          Удалить
+        </Button>
       </Modal.Footer>
     </Modal>
   );

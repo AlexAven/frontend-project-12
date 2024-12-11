@@ -141,12 +141,12 @@ const AddChannelModal = () => {
       name: '',
     },
     onSubmit: ({ name }) => {
-      const ChannelName = { name: name.trim() };
+      const channelName = { name: name.trim() };
       schema
-        .validate(ChannelName)
+        .validate(channelName)
         .then(() => {
-          dispatch(addingChannelSucceeded(ChannelName));
-          dispatch(postChannel(ChannelName));
+          dispatch(addingChannelSucceeded(channelName));
+          dispatch(postChannel(channelName));
           handleClose();
         })
         .catch((error) => dispatch(addingChannelFailed(error)));

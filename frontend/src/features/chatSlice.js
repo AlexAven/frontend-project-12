@@ -18,6 +18,11 @@ const initialState = {
       },
       deleteChannel: {
         isOpen: false,
+        channelId: null,
+      },
+      renameChannel: {
+        isOpen: false,
+        channelId: null,
       },
     },
   },
@@ -78,7 +83,7 @@ export const postMessage = createAsyncThunk(
   },
 );
 
-export const postChannel = createAsyncThunk('@@chat/addChannel', async (channelName, { getState }) => {
+export const postChannel = createAsyncThunk('@@chat/add-channel', async (channelName, { getState }) => {
   const token = getState().login.entities.token;
   const res = await axios.post('/api/v1/channels', channelName, {
     headers: {
@@ -88,6 +93,34 @@ export const postChannel = createAsyncThunk('@@chat/addChannel', async (channelN
 
   return res.data;
 });
+
+export const deleteChannel = createAsyncThunk(
+  '@@chat/delete-channel',
+  async (channelId, { getState }) => {
+    const token = getState().login.entities.token;
+    const res = await axios.delete(`/api/v1/channels/${channelId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return res.data;
+  },
+);
+
+export const renameChannel = createAsyncThunk(
+  '@@chat/rename-channel',
+  async ({ id, channelName }, { getState }) => {
+    const token = getState().login.entities.token;
+    const res = await axios.patch(`/api/v1/channels/${id}`, channelName, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return res.data;
+  },
+);
 
 const chatSlice = createSlice({
   name: '@@channels',
@@ -106,11 +139,19 @@ const chatSlice = createSlice({
     closeAddChannelModal: (state) => {
       state.ui.modals.addChannel.isOpen = false;
     },
-    openDeleteChannelModal: (state) => {
+    openDeleteChannelModal: (state, { payload }) => {
       state.ui.modals.deleteChannel.isOpen = true;
+      state.ui.modals.deleteChannel.channelId = payload;
     },
     closeDeleteChannelModal: (state) => {
       state.ui.modals.deleteChannel.isOpen = false;
+    },
+    openRenameChannelModal: (state, { payload }) => {
+      state.ui.modals.renameChannel.isOpen = true;
+      state.ui.modals.renameChannel.channelId = payload;
+    },
+    closeRenameChannelModal: (state) => {
+      state.ui.modals.renameChannel.isOpen = false;
     },
   },
   extraReducers: (builder) => {
@@ -149,6 +190,24 @@ const chatSlice = createSlice({
         state.channels.ids.push(payload.id);
         state.ui.activeChannelIndex = state.channels.ids.indexOf(payload.id);
         state.error = null;
+      })
+      .addCase(deleteChannel.rejected, (state, { error }) => {
+        state.error = error.message;
+      })
+      .addCase(deleteChannel.fulfilled, (state, { payload }) => {
+        const { id } = payload;
+        delete state.channels.entities[id];
+        state.channels.ids = state.channels.ids.filter((item) => item !== id);
+        state.ui.activeChannelIndex = 0;
+        state.error = null;
+      })
+      .addCase(renameChannel.rejected, (state, { error }) => {
+        state.error = error.message;
+      })
+      .addCase(renameChannel.fulfilled, (state, { payload }) => {
+        const { id, name } = payload;
+        state.channels.entities[id].name = name;
+        state.error = null;
       });
   },
 });
@@ -160,4 +219,6 @@ export const {
   closeAddChannelModal,
   openDeleteChannelModal,
   closeDeleteChannelModal,
+  openRenameChannelModal,
+  closeRenameChannelModal,
 } = chatSlice.actions;
