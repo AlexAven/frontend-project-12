@@ -75,6 +75,17 @@ export const postMessage = createAsyncThunk(
   },
 );
 
+export const postChannel = createAsyncThunk('@@chat/addChannel', async (channelName, { getState }) => {
+  const token = getState().login.entities.token;
+  const res = await axios.post('/api/v1/channels', channelName, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return res.data;
+});
+
 const chatSlice = createSlice({
   name: '@@channels',
   initialState,
@@ -110,13 +121,25 @@ const chatSlice = createSlice({
       })
       .addCase(getMessages.fulfilled, (state, { payload }) => {
         payload.forEach((message) => {
-          state.messages.entities[message.id] = message;
+          state.messages.entities[message.id] = {
+            ...message,
+            removable: message.name !== 'general' && message.name !== 'random',
+          };
           state.messages.ids.push(message.id);
         });
         state.error = null;
       })
       .addCase(postMessage.rejected, (state, { payload }) => {
         state.error = payload || 'Failed to send message due to unknown error.';
+      })
+      .addCase(postChannel.rejected, (state, { error }) => {
+        state.error = error.message;
+      })
+      .addCase(postChannel.fulfilled, (state, { payload }) => {
+        state.channels.entities[payload.id] = payload;
+        state.channels.ids.push(payload.id);
+        state.ui.activeChannelIndex = state.channels.ids.indexOf(payload.id);
+        state.error = null;
       });
   },
 });

@@ -121,7 +121,7 @@ import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { addingChannelSucceeded, addingChannelFailed } from '../../features/validationSlice';
-import { closeAddChannelModal } from '../../features/chatSlice';
+import { closeAddChannelModal, postChannel } from '../../features/chatSlice';
 
 const AddChannelModal = () => {
   const dispatch = useDispatch();
@@ -140,11 +140,13 @@ const AddChannelModal = () => {
     initialValues: {
       name: '',
     },
-    onSubmit: (values) => {
+    onSubmit: ({ name }) => {
+      const ChannelName = { name: name.trim() };
       schema
-        .validate(values)
+        .validate(ChannelName)
         .then(() => {
-          dispatch(addingChannelSucceeded(values));
+          dispatch(addingChannelSucceeded(ChannelName));
+          dispatch(postChannel(ChannelName));
           handleClose();
         })
         .catch((error) => dispatch(addingChannelFailed(error)));
