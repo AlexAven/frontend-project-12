@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import Form from '../../components/Form/Form';
+import Form from '../../components/forms/LoginForm';
 
 const LoginPage = () => {
   const navigate = useNavigate();

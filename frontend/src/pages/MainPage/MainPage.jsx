@@ -7,7 +7,7 @@ import { setUser } from '../../features/loginSlice';
 import { getChannels, getMessages, openAddChannelModal } from '../../features/chatSlice';
 import Channels from '../../components/Channels/Channels';
 import Chat from '../../components/Chat/Chat';
-import Input from '../../components/Input/Input';
+import Input from '../../components/forms/SendMessageForm';
 import AddChannelModal from '../../components/modals/AddChannelModal';
 
 const MainPage = () => {

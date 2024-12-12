@@ -5,6 +5,7 @@ import MainPage from '../pages/MainPage/MainPage';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import NotFoundPage from '../pages/NotFoundPage/NotFoundPage';
 import RequireAuth from '../components/hoc/RequireAuth';
+import SignupPage from '../pages/SignupPage/SignupPage';
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
             }
           />
           <Route path="login" element={<LoginPage />} />
+          <Route path="signup" element={<SignupPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
