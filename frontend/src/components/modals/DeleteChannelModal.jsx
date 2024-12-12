@@ -1,11 +1,12 @@
 import { Modal, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { closeDeleteChannelModal, deleteChannel } from '../../features/chatSlice';
+import { closeDeleteChannelModal, deleteChannel, deleteMessage } from '../../features/chatSlice';
 
 const DeleteChannelModal = () => {
   const dispatch = useDispatch();
 
+  const messagesState = useSelector((state) => state.chat.messages);
   const id = useSelector((state) => state.chat.ui.modals.deleteChannel.channelId);
   const isOpen = useSelector((state) => state.chat.ui.modals.deleteChannel.isOpen);
 
@@ -14,8 +15,17 @@ const DeleteChannelModal = () => {
   };
 
   const handleDelete = (id) => {
+    const channelMessagesIds = messagesState.ids.filter(
+      (messageId) => messagesState.entities[messageId].channelId === id,
+    );
+
     dispatch(deleteChannel(id));
     handleClose();
+
+    channelMessagesIds.map((item) => {
+      const message = messagesState.entities[item];
+      dispatch(deleteMessage(message.id));
+    });
   };
 
   return (

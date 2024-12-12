@@ -122,6 +122,20 @@ export const renameChannel = createAsyncThunk(
   },
 );
 
+export const deleteMessage = createAsyncThunk(
+  '@@chat/delete-message',
+  async (messageId, { getState }) => {
+    const token = getState().login.entities.token;
+    const res = await axios.delete(`/api/v1/messages/${messageId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return res.data;
+  },
+);
+
 const chatSlice = createSlice({
   name: '@@channels',
   initialState,
@@ -207,6 +221,15 @@ const chatSlice = createSlice({
       .addCase(renameChannel.fulfilled, (state, { payload }) => {
         const { id, name } = payload;
         state.channels.entities[id].name = name;
+        state.error = null;
+      })
+      .addCase(deleteMessage.rejected, (state, { error }) => {
+        state.error = error.message;
+      })
+      .addCase(deleteMessage.fulfilled, (state, { payload }) => {
+        const { id } = payload;
+        delete state.messages.entities[id];
+        state.messages.ids = state.messages.ids.filter((item) => item !== id);
         state.error = null;
       });
   },
