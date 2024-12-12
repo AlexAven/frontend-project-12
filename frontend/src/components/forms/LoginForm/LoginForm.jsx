@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 
-import { loginUser } from '../../features/loginSlice';
+import { loginUser } from '../../../features/loginSlice';
 
 const CustomForm = () => {
   const dispatch = useDispatch();

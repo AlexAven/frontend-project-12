@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import Form from '../../components/forms/LoginForm';
+import Form from '../../components/forms/LoginForm/LoginForm';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ const LoginPage = () => {
             <div className=" card-footer p-4">
               <div className="login__footer-text text-center">
                 <span className="mx-2">Нет аккаунта?</span>
-                <a href="/signup">Регистрация</a>
+                <Link to={'/signup'}>Регистрация</Link>
               </div>
             </div>
           </div>

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 
 import { CgArrowRightR as SubmitBtn } from 'react-icons/cg';
-import { postMessage } from '../../features/chatSlice';
+import { postMessage } from '../../../features/chatSlice';
 
 const Input = () => {
   const dispatch = useDispatch();

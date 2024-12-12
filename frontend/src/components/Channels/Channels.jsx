@@ -6,8 +6,8 @@ import {
   setActiveChannel,
   openRenameChannelModal,
 } from '../../features/chatSlice';
-import DeleteChannelModal from '../modals/DeleteChannelModal';
-import RenameChannelModal from '../modals/RenameChannelModal';
+import DeleteChannelModal from '../modals/DeleteChannelModal/DeleteChannelModal';
+import RenameChannelModal from '../modals/RenameChannelModal/RenameChannelModal';
 
 const Channels = () => {
   const dispatch = useDispatch();

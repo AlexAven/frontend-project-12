@@ -1,7 +1,7 @@
 import { Modal, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { closeDeleteChannelModal, deleteChannel, deleteMessage } from '../../features/chatSlice';
+import { closeDeleteChannelModal, deleteChannel, deleteMessage } from '../../../features/chatSlice';
 
 const DeleteChannelModal = () => {
   const dispatch = useDispatch();

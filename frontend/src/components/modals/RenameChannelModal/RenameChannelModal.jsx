@@ -1,11 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import * as yup from 'yup';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { addingChannelSucceeded, addingChannelFailed } from '../../features/validationSlice';
-import { closeRenameChannelModal, renameChannel } from '../../features/chatSlice';
+import { addingChannelSucceeded, addingChannelFailed } from '../../../features/validationSlice';
+import { closeRenameChannelModal, renameChannel } from '../../../features/chatSlice';
 
 const RenameChannelModal = () => {
   const dispatch = useDispatch();

@@ -4,8 +4,8 @@ import { useFormik } from 'formik';
 import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { addingChannelSucceeded, addingChannelFailed } from '../../features/validationSlice';
-import { closeAddChannelModal, postChannel } from '../../features/chatSlice';
+import { addingChannelSucceeded, addingChannelFailed } from '../../../features/validationSlice';
+import { closeAddChannelModal, postChannel } from '../../../features/chatSlice';
 
 const AddChannelModal = () => {
   const dispatch = useDispatch();
