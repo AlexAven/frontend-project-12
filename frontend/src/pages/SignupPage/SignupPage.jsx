@@ -1,6 +1,20 @@
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
 import Form from '../../components/forms/SignupForm/SignupForm';
 
 const SignupPage = () => {
+  const navigate = useNavigate();
+
+  const token = useSelector((state) => state.login.entities?.token);
+
+  useEffect(() => {
+    if (token) {
+      navigate('/');
+    }
+  }, [token, navigate]);
+
   return (
     <div className="row justify-content-center align-content-center h-100">
       <div className="col-12 col-md-8 col-xxl-6">
@@ -10,7 +24,6 @@ const SignupPage = () => {
               <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
                 <img className="rounded-circle" src="./src/assets/signup.jpg" alt="signup" />
               </div>
-              <h1>Регистрация</h1>
               <Form />
             </div>
           </div>

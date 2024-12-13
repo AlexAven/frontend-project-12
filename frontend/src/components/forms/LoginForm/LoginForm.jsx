@@ -1,11 +1,12 @@
-import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { loginUser } from '../../../features/loginSlice';
 
 const CustomForm = () => {
   const dispatch = useDispatch();
-  const error = useSelector((state) => state.login.error);
+  const error = useSelector((state) => state.login.loginError);
+
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -15,6 +16,7 @@ const CustomForm = () => {
       dispatch(loginUser(values));
     },
   });
+
   return (
     <form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-md-0">
       <h1 className="text-center mb-4">Войти</h1>

@@ -16,13 +16,14 @@ const MainPage = () => {
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem('userData'));
-    const StorageToken = userData.token;
+    const StorageToken = userData?.token;
     if (!StorageToken) {
       navigate('/login');
+    } else {
+      dispatch(setUser(userData));
+      dispatch(getChannels());
+      dispatch(getMessages());
     }
-    dispatch(setUser(userData));
-    dispatch(getChannels());
-    dispatch(getMessages());
   }, [navigate, dispatch]);
 
   const handleOpenModal = () => {

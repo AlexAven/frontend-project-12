@@ -147,6 +147,7 @@ const chatSlice = createSlice({
       state.messages.entities[payload.id] = payload;
       state.messages.ids.push(payload.id);
     },
+    resetChatState: () => initialState,
     openAddChannelModal: (state) => {
       state.ui.modals.addChannel.isOpen = true;
     },
@@ -244,4 +245,5 @@ export const {
   closeDeleteChannelModal,
   openRenameChannelModal,
   closeRenameChannelModal,
+  resetChatState,
 } = chatSlice.actions;
