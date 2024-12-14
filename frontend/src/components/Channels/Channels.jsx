@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Dropdown, ButtonGroup, Button } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -10,6 +11,7 @@ import DeleteChannelModal from '../modals/DeleteChannelModal/DeleteChannelModal'
 import RenameChannelModal from '../modals/RenameChannelModal/RenameChannelModal';
 
 const Channels = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const channels = useSelector((state) => state.chat.channels);
   const activeChannel = useSelector((state) => state.chat.ui.activeChannelIndex);
@@ -50,10 +52,10 @@ const Channels = () => {
 
                   <Dropdown.Menu>
                     <Dropdown.Item onClick={() => handleDeleteModal(id)} href="#">
-                      Удалить
+                      {t('chat.channels.dropdown.deleteBtn')}
                     </Dropdown.Item>
                     <Dropdown.Item onClick={() => handleRenameModal(id)} href="#">
-                      Переименовать
+                      {t('chat.channels.dropdown.renameBtn')}
                     </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>

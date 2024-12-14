@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -5,6 +6,7 @@ import { useSelector } from 'react-redux';
 import Form from '../../components/forms/LoginForm/LoginForm';
 
 const LoginPage = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   // const location = useLocation();
   const token = useSelector((state) => state.login.entities?.token);
@@ -31,8 +33,8 @@ const LoginPage = () => {
             </div>
             <div className=" card-footer p-4">
               <div className="login__footer-text text-center">
-                <span className="mx-2">Нет аккаунта?</span>
-                <Link to={'/signup'}>Регистрация</Link>
+                <span className="mx-2">{t('loginPage.hasAccount')}</span>
+                <Link to={'/signup'}>{t('loginPage.regLink')}</Link>
               </div>
             </div>
           </div>

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
@@ -6,6 +7,7 @@ import { CgArrowRightR as SubmitBtn } from 'react-icons/cg';
 import { postMessage } from '../../../features/chatSlice';
 
 const Input = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const messageInputRef = useRef(null);
 
@@ -41,7 +43,7 @@ const Input = () => {
             id="message"
             name="message"
             aria-label="Новое сообщение"
-            placeholder="Введите сообщение..."
+            placeholder={t('chat.form.placeholder')}
             className="border-0 p-0 ps-2 form-control"
             onChange={formik.handleChange}
             value={formik.values.message}
@@ -49,7 +51,7 @@ const Input = () => {
           />
           <button type="submit" disabled="" className="btn btn-group-vertical">
             <SubmitBtn size={'1.5rem'} />
-            <span className="visually-hidden">Отправить</span>
+            <span className="visually-hidden">{t('chat.form.sendBtn')}</span>
           </button>
         </div>
       </form>

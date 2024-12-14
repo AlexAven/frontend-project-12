@@ -1,3 +1,5 @@
+import 'react-i18next';
+import '../i18next';
 import { Routes, Route } from 'react-router-dom';
 
 import Layout from '../components/Layout/Layout';

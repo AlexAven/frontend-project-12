@@ -1,10 +1,12 @@
 import * as yup from 'yup';
+import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { signupUser } from '../../../features/loginSlice';
 
 const SignupForm = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const error = useSelector((state) => state.login?.signupError);
@@ -32,7 +34,7 @@ const SignupForm = () => {
 
   return (
     <form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-md-0">
-      <h1 className="text-center mb-4">Регистрация</h1>
+      <h1 className="text-center mb-4">{t('signupPage.title')}</h1>
 
       <div className="form-floating mb-3">
         <input
@@ -45,7 +47,7 @@ const SignupForm = () => {
           onBlur={formik.handleBlur}
           value={formik.values.username}
         />
-        <label htmlFor="username">Имя пользователя</label>
+        <label htmlFor="username">{t('signupPage.form.name')}</label>
         {formik.touched.username && formik.errors.username ? (
           <div className="invalid-feedback">{formik.errors.username}</div>
         ) : null}
@@ -64,7 +66,7 @@ const SignupForm = () => {
           onBlur={formik.handleBlur}
           value={formik.values.password}
         />
-        <label htmlFor="password">Пароль</label>
+        <label htmlFor="password">{t('signupPage.form.password')}</label>
         {formik.touched.password && formik.errors.password ? (
           <div className="invalid-feedback">{formik.errors.password}</div>
         ) : null}
@@ -82,14 +84,14 @@ const SignupForm = () => {
           onBlur={formik.handleBlur}
           value={formik.values.passwordConfirmation}
         />
-        <label htmlFor="passwordConfirmation">Подтвердите пароль</label>
+        <label htmlFor="passwordConfirmation">{t('signupPage.form.passwordConfirm')}</label>
         {formik.touched.passwordConfirmation && formik.errors.passwordConfirmation ? (
           <div className="invalid-feedback">{formik.errors.passwordConfirmation}</div>
         ) : null}
       </div>
 
       <button type="submit" className="w-100 mb-5 btn btn-outline-primary">
-        Зарегистрироваться
+        {t('signupPage.form.sendBtn')}
       </button>
     </form>
   );

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { io } from 'socket.io-client';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -5,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { receiveMessage } from '../../features/chatSlice';
 
 const Chat = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const chatState = useSelector((state) => state.chat);
@@ -34,7 +36,7 @@ const Chat = () => {
         <p className="m-0">
           <b>{`# ${currentChannel?.name}`}</b>
         </p>
-        <span className="text-muted">{`${messagesCounter} сообщений`}</span>
+        <span className="text-muted">{`${messagesCounter} ${t('chat.messagesCount')}`}</span>
       </div>
       <div id="messages-box" className="chat-messages overflow-auto px-5">
         {channelMessages &&

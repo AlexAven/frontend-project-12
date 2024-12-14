@@ -1,4 +1,5 @@
 import * as yup from 'yup';
+import { useTranslation } from 'react-i18next';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { useEffect, useRef } from 'react';
@@ -8,6 +9,7 @@ import { addingChannelSucceeded, addingChannelFailed } from '../../../features/v
 import { closeAddChannelModal, postChannel } from '../../../features/chatSlice';
 
 const AddChannelModal = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const validation = useSelector((state) => state.validation.addingChannel);
   const channelIds = useSelector((state) => state.chat.channels.ids);
@@ -53,12 +55,12 @@ const AddChannelModal = () => {
   return (
     <Modal show={isOpen} onHide={handleClose} centered>
       <Modal.Header closeButton>
-        <Modal.Title>Добавить канал</Modal.Title>
+        <Modal.Title>{t('chat.addModal.title')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit}>
           <Form.Group controlId="channelName">
-            <Form.Label>Имя канала</Form.Label>
+            <Form.Label>{t('chat.addModal.desription')}</Form.Label>
             <Form.Control
               type="text"
               name="name"
@@ -73,10 +75,10 @@ const AddChannelModal = () => {
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
-          Отменить
+          {t('chat.addModal.cancelBtn')}
         </Button>
         <Button variant="primary" onClick={formik.handleSubmit}>
-          Отправить
+          {t('chat.addModal.sendBtn')}
         </Button>
       </Modal.Footer>
     </Modal>

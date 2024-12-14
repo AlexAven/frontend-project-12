@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as yup from 'yup';
+import { useTranslation } from 'react-i18next';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { useEffect, useRef } from 'react';
@@ -9,6 +10,7 @@ import { addingChannelSucceeded, addingChannelFailed } from '../../../features/v
 import { closeRenameChannelModal, renameChannel } from '../../../features/chatSlice';
 
 const RenameChannelModal = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const id = useSelector((state) => state.chat.ui.modals.renameChannel.channelId);
@@ -62,7 +64,7 @@ const RenameChannelModal = () => {
   return (
     <Modal show={isOpen} onHide={handleClose} centered>
       <Modal.Header closeButton>
-        <Modal.Title>Переименовать канал</Modal.Title>
+        <Modal.Title>{t('chat.renameModal.title')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit}>
@@ -81,10 +83,10 @@ const RenameChannelModal = () => {
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
-          Отменить
+          {t('chat.renameModal.cancelBtn')}
         </Button>
         <Button variant="primary" onClick={formik.handleSubmit}>
-          Отправить
+          {t('chat.renameModal.sendBtn')}
         </Button>
       </Modal.Footer>
     </Modal>
