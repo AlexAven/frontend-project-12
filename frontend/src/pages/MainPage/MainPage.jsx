@@ -1,11 +1,11 @@
 import { useTranslation } from 'react-i18next';
 import { CgAddR as AddBtn } from 'react-icons/cg';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { setUser } from '../../features/loginSlice';
-import { getChannels, getMessages, openAddChannelModal } from '../../features/chatSlice';
+import { getChannels, getMessages, openAddChannelModal, clearError } from '../../features/chatSlice';
 import Channels from '../../components/Channels/Channels';
 import Chat from '../../components/Chat/Chat';
 import Input from '../../components/forms/SendMessageForm/SendMessageForm';
@@ -15,6 +15,8 @@ const MainPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const serverErrors = useSelector((state) => state.chat.error);
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem('userData'));
@@ -27,6 +29,13 @@ const MainPage = () => {
       dispatch(getMessages());
     }
   }, [navigate, dispatch]);
+
+  useEffect(() => {
+    if (serverErrors) {
+      alert(serverErrors);
+      dispatch(clearError());
+    }
+  }, [serverErrors, dispatch]);
 
   const handleOpenModal = () => {
     dispatch(openAddChannelModal());

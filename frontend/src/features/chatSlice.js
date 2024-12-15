@@ -52,36 +52,23 @@ export const getMessages = createAsyncThunk('@@chat/get-messages', async (_, { g
   return data;
 });
 
-export const postMessage = createAsyncThunk(
-  '@@chat/send-message',
-  async (userMessage, { getState, rejectWithValue }) => {
-    try {
-      const loginState = getState().login;
-      const chatState = getState().chat;
-      const activeChannelIndex = chatState.ui.activeChannelIndex;
-      const currentChannelId = chatState.channels.ids[activeChannelIndex];
-      const { token, username } = loginState.entities;
+export const postMessage = createAsyncThunk('@@chat/send-message', async (userMessage, { getState }) => {
+  const loginState = getState().login;
+  const chatState = getState().chat;
+  const activeChannelIndex = chatState.ui.activeChannelIndex;
+  const currentChannelId = chatState.channels.ids[activeChannelIndex];
+  const { token, username } = loginState.entities;
 
-      const newMessage = { body: userMessage, channelId: currentChannelId, username };
+  const newMessage = { body: userMessage, channelId: currentChannelId, username };
 
-      const res = await axios.post('/api/v1/messages', newMessage, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+  const res = await axios.post('/api/v1/messages', newMessage, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
-      return res.data;
-    } catch (error) {
-      if (error.response) {
-        return rejectWithValue(error.response.data);
-      } else if (error.request) {
-        return rejectWithValue('Network error. Please check your connection.');
-      } else {
-        return rejectWithValue('Unexpected error occurred.');
-      }
-    }
-  },
-);
+  return res.data;
+});
 
 export const postChannel = createAsyncThunk('@@chat/add-channel', async (channelName, { getState }) => {
   const token = getState().login.entities.token;
@@ -168,6 +155,9 @@ const chatSlice = createSlice({
     closeRenameChannelModal: (state) => {
       state.ui.modals.renameChannel.isOpen = false;
     },
+    clearError: (state) => {
+      state.error = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -194,8 +184,8 @@ const chatSlice = createSlice({
         });
         state.error = null;
       })
-      .addCase(postMessage.rejected, (state, { payload }) => {
-        state.error = payload || 'Failed to send message due to unknown error.';
+      .addCase(postMessage.rejected, (state, { error }) => {
+        state.error = error.message || 'Failed to send message due to unknown error.';
       })
       .addCase(postChannel.rejected, (state, { error }) => {
         state.error = error.message;
@@ -246,4 +236,5 @@ export const {
   openRenameChannelModal,
   closeRenameChannelModal,
   resetChatState,
+  clearError,
 } = chatSlice.actions;
