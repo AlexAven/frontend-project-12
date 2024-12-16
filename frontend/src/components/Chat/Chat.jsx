@@ -10,6 +10,9 @@ const Chat = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
+  filter.add(filter.getDictionary('en'));
+  filter.add(filter.getDictionary('ru'));
+
   const chatState = useSelector((state) => state.chat);
   const activeChannelIndex = chatState.ui.activeChannelIndex;
   const currentChannelId = chatState.channels.ids[activeChannelIndex];
@@ -19,12 +22,11 @@ const Chat = () => {
   );
   const channelMessages = channelMessagesIndex.map((id) => chatState.messages.entities[id]);
   const messagesCounter = channelMessagesIndex.length;
+  const censoredChannelName = filter.clean(currentChannel?.name);
 
   useEffect(() => {
     const socket = io();
     socket.on('newMessage', (payload) => {
-      filter.add(filter.getDictionary('en'));
-      filter.add(filter.getDictionary('ru'));
       const sensoredMessage = { ...payload, body: filter.clean(payload.body) };
       dispatch(receiveMessage(sensoredMessage));
     });
@@ -38,7 +40,7 @@ const Chat = () => {
     <>
       <div className="bg-light mb-4 p-3 shadow-sm small">
         <p className="m-0">
-          <b>{`# ${currentChannel?.name || 'Канал не выбран'}`}</b>
+          <b>{`# ${censoredChannelName || 'Канал не выбран'}`}</b>
         </p>
         <span className="text-muted">{`${messagesCounter} ${t('chat.messagesCount')}`}</span>
       </div>

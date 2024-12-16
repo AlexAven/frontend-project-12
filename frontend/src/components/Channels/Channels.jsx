@@ -1,3 +1,4 @@
+import filter from 'leo-profanity';
 import { useTranslation } from 'react-i18next';
 import { Dropdown, ButtonGroup, Button } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
@@ -23,11 +24,15 @@ const Channels = () => {
     dispatch(openRenameChannelModal(id));
   };
 
+  filter.add(filter.getDictionary('en'));
+  filter.add(filter.getDictionary('ru'));
+
   return (
     <>
       <ul className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
         {channels.ids.map((identificator, index) => {
           const { name, id, removable } = channels.entities[identificator];
+          const censoredChannelName = filter.clean(name);
           const isActive = activeChannel === index;
           const activeBtnClass = isActive ? 'btn-secondary' : 'btn-light';
 
@@ -40,7 +45,7 @@ const Channels = () => {
                     onClick={() => dispatch(setActiveChannel(index))}
                   >
                     <span className="me-1">#</span>
-                    {name}
+                    {censoredChannelName}
                   </Button>
 
                   <Dropdown.Toggle
