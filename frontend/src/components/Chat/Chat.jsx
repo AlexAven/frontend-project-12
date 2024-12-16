@@ -1,3 +1,4 @@
+import filter from 'leo-profanity';
 import { useTranslation } from 'react-i18next';
 import { io } from 'socket.io-client';
 import { useEffect } from 'react';
@@ -22,7 +23,10 @@ const Chat = () => {
   useEffect(() => {
     const socket = io();
     socket.on('newMessage', (payload) => {
-      dispatch(receiveMessage(payload));
+      filter.add(filter.getDictionary('en'));
+      filter.add(filter.getDictionary('ru'));
+      const sensoredMessage = { ...payload, body: filter.clean(payload.body) };
+      dispatch(receiveMessage(sensoredMessage));
     });
 
     return () => {
