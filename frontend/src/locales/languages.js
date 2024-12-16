@@ -43,17 +43,20 @@ const resources = {
           sendBtn: 'Отправить',
         },
         renameModal: {
+          notification: 'Канал переименован',
           title: 'Переименовать канал',
           cancelBtn: 'Отменить',
           sendBtn: 'Отправить',
         },
         deleteModal: {
+          notification: 'Канал удален',
           title: 'Удалить канал',
           desription: 'Уверены?',
           cancelBtn: 'Отменить',
           sendBtn: 'Удалить',
         },
         addModal: {
+          notification: 'Канал создан',
           title: 'Добавить канал',
           desription: 'Имя канала',
           cancelBtn: 'Отменить',

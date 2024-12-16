@@ -51,6 +51,8 @@ const loginSlice = createSlice({
         // state.loginError = error.message;
         if (error.message.includes('401')) {
           state.loginError = 'Неверные имя пользователя или пароль';
+        } else {
+          state.loginError = error.message;
         }
       })
       .addCase(loginUser.fulfilled, (state, { payload }) => {
