@@ -73,6 +73,7 @@ const Channels = () => {
                 >
                   <span className="me-1">#</span>
                   {name}
+                  <span className="visually-hidden">Управление каналом</span>
                 </Button>
               )}
             </li>
