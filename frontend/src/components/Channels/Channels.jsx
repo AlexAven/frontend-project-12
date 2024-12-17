@@ -39,9 +39,9 @@ const Channels = () => {
           return (
             <li key={id} className="nav-item w-100">
               {removable ? (
-                <Dropdown as={ButtonGroup} className="w-100">
+                <Dropdown as={ButtonGroup} className="d-flex">
                   <Button
-                    className={`text-start rounded-0 ${activeBtnClass} ${isActive ? 'active' : ''}`}
+                    className={`text-truncate w-100 text-start rounded-0 ${activeBtnClass} ${isActive ? 'active' : ''}`}
                     onClick={() => dispatch(setActiveChannel(index))}
                   >
                     <span className="me-1">#</span>
