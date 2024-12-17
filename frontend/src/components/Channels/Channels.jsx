@@ -56,6 +56,7 @@ const Channels = () => {
                   />
 
                   <Dropdown.Menu>
+                    <span className="visually-hidden">{t('chat.channels.properties')}</span>
                     <Dropdown.Item onClick={() => handleDeleteModal(id)} href="#">
                       {t('chat.channels.dropdown.deleteBtn')}
                     </Dropdown.Item>
@@ -63,7 +64,6 @@ const Channels = () => {
                       {t('chat.channels.dropdown.renameBtn')}
                     </Dropdown.Item>
                   </Dropdown.Menu>
-                  <span className="visually-hidden">{t('chat.channels.properties')}</span>
                 </Dropdown>
               ) : (
                 <Button
@@ -73,7 +73,6 @@ const Channels = () => {
                 >
                   <span className="me-1">#</span>
                   {name}
-                  <span className="visually-hidden">Управление каналом</span>
                 </Button>
               )}
             </li>
