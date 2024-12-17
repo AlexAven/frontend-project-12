@@ -53,10 +53,10 @@ const Channels = () => {
                     variant={activeBtnClass}
                     id={`dropdown-split-${id}`}
                     className={`rounded-0.5 ${isActive ? 'active' : ''}  ${isActive ? 'btn-secondary' : ''}`}
-                  />
-
-                  <Dropdown.Menu>
+                  >
                     <span className="visually-hidden">{t('chat.channels.properties')}</span>
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
                     <Dropdown.Item onClick={() => handleDeleteModal(id)} href="#">
                       {t('chat.channels.dropdown.deleteBtn')}
                     </Dropdown.Item>
