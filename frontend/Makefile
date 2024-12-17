@@ -5,7 +5,7 @@ dev:
 	npx vite
 
 start:
-	npx start-server -s ./dist
+	npm run start
 
 build:
 	npm run build
