@@ -50,7 +50,7 @@ const CustomForm = () => {
         <label className="form-label" htmlFor="password">
           {t('loginPage.form.password')}
         </label>
-        {error && <div className="invalid-feedback">{error}</div>}
+        {error && <div className="invalid-feedback">{t(error)}</div>}
       </div>
       <button type="submit" className="w-100 mb-5 btn btn-outline-primary">
         {t('loginPage.form.loginBtn')}

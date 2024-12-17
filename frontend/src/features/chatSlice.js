@@ -175,7 +175,9 @@ const chatSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getChannels.rejected, (state, { error }) => {
-        state.error = error.message;
+        state.error = error.message.includes(500)
+          ? 'validation.connectionError'
+          : 'validation.unknownError';
       })
       .addCase(getChannels.fulfilled, (state, { payload }) => {
         payload.forEach((channel) => {
@@ -185,7 +187,9 @@ const chatSlice = createSlice({
         state.error = null;
       })
       .addCase(getMessages.rejected, (state, { error }) => {
-        state.error = error.message;
+        state.error = error.message.includes(500)
+          ? 'validation.connectionError'
+          : 'validation.unknownError';
       })
       .addCase(getMessages.fulfilled, (state, { payload }) => {
         payload.forEach((message) => {
@@ -198,10 +202,14 @@ const chatSlice = createSlice({
         state.error = null;
       })
       .addCase(postMessage.rejected, (state, { error }) => {
-        state.error = error.message || 'Failed to send message due to unknown error.';
+        state.error = error.message.includes(500)
+          ? 'validation.connectionError'
+          : 'validation.unknownError';
       })
       .addCase(postChannel.rejected, (state, { error }) => {
-        state.error = error.message;
+        state.error = error.message.includes(500)
+          ? 'validation.connectionError'
+          : 'validation.unknownError';
       })
       .addCase(postChannel.fulfilled, (state, { payload }) => {
         state.channels.entities[payload.id] = payload;
@@ -211,7 +219,9 @@ const chatSlice = createSlice({
         state.error = null;
       })
       .addCase(deleteChannel.rejected, (state, { error }) => {
-        state.error = error.message;
+        state.error = error.message.includes(500)
+          ? 'validation.connectionError'
+          : 'validation.unknownError';
       })
       .addCase(deleteChannel.fulfilled, (state, { payload }) => {
         const { id } = payload;
@@ -222,7 +232,9 @@ const chatSlice = createSlice({
         state.error = null;
       })
       .addCase(renameChannel.rejected, (state, { error }) => {
-        state.error = error.message;
+        state.error = error.message.includes(500)
+          ? 'validation.connectionError'
+          : 'validation.unknownError';
       })
       .addCase(renameChannel.fulfilled, (state, { payload }) => {
         const { id, name } = payload;
@@ -231,7 +243,9 @@ const chatSlice = createSlice({
         state.error = null;
       })
       .addCase(deleteMessage.rejected, (state, { error }) => {
-        state.error = error.message;
+        state.error = error.message.includes(500)
+          ? 'validation.connectionError'
+          : 'validation.unknownError';
       })
       .addCase(deleteMessage.fulfilled, (state, { payload }) => {
         const { id } = payload;

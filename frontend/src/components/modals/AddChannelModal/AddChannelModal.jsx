@@ -1,4 +1,5 @@
 import * as yup from 'yup';
+import { setLocale } from 'yup';
 import { useTranslation } from 'react-i18next';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useFormik } from 'formik';
@@ -18,8 +19,22 @@ const AddChannelModal = () => {
 
   const isOpen = useSelector((state) => state.chat.ui.modals.addChannel.isOpen);
 
+  const customMessages = {
+    mixed: {
+      required: t('validation.emptyField'),
+    },
+    string: {
+      min: ({ min }) => (min === 3 ? t('validation.length') : t('validation.min')),
+      max: t('validation.length'),
+      oneOf: t('validation.passwordConfirmation'),
+      notOneOf: t('validation.uniqName'),
+    },
+  };
+
+  setLocale(customMessages);
+
   const schema = yup.object().shape({
-    name: yup.string().required().min(3).max(20).notOneOf(channelNames),
+    name: yup.string().required().min(3).max(20).notOneOf(channelNames, t('validation.uniqName')),
   });
 
   const formik = useFormik({

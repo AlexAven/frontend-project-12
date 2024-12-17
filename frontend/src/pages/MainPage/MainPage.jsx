@@ -45,7 +45,7 @@ const MainPage = () => {
 
   useEffect(() => {
     if (serverErrors) {
-      toast.error(serverErrors, {
+      toast.error(t(serverErrors), {
         theme: 'colored',
         pauseOnFocusLoss: false,
         hideProgressBar: true,
@@ -101,6 +101,7 @@ const MainPage = () => {
               onClick={handleOpenModal}
             >
               <AddBtn size={'1.6rem'} />
+              <span className="visually-hidden">{t('chat.channels.addBtn')}</span>
             </button>
           </div>
           <Channels />

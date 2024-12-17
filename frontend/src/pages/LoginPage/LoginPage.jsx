@@ -8,12 +8,9 @@ import Form from '../../components/forms/LoginForm/LoginForm';
 const LoginPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  // const location = useLocation();
   const token = useSelector((state) => state.login.entities?.token);
-  // const fromPage = location.state?.from?.pathname || '/';
 
   useEffect(() => {
-    // if (token) {
     if (localStorage.getItem('userData') && token) {
       navigate('fromPage');
       navigate('/');

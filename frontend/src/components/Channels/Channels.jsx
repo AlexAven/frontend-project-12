@@ -63,6 +63,7 @@ const Channels = () => {
                       {t('chat.channels.dropdown.renameBtn')}
                     </Dropdown.Item>
                   </Dropdown.Menu>
+                  <span className="visually-hidden">{t('chat.channels.properties')}</span>
                 </Dropdown>
               ) : (
                 <Button
