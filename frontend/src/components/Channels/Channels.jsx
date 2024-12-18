@@ -33,7 +33,9 @@ const Channels = () => {
   useEffect(() => {
     const socket = io();
     socket.on('removeChannel', (payload) => {
-      dispatch(updateChannels(payload));
+      if (channels[payload.id]) {
+        dispatch(updateChannels(payload));
+      }
     });
 
     return () => {
