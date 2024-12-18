@@ -52,7 +52,7 @@ const resources = {
           formLabel: 'Имя канала',
         },
         deleteModal: {
-          notification: 'Канал удален',
+          notification: 'Канал удалён',
           title: 'Удалить канал',
           desription: 'Уверены?',
           cancelBtn: 'Отменить',
