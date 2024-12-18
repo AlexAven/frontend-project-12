@@ -84,6 +84,9 @@ const RenameChannelModal = () => {
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit}>
           <Form.Group controlId="channelName">
+            <label htmlFor="name" className="visually-hidden">
+              {t('chat.renameModal.formLabel')}
+            </label>
             <Form.Control
               type="text"
               name="name"
