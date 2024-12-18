@@ -1,6 +1,6 @@
+import { io } from 'socket.io-client';
 import filter from 'leo-profanity';
 import { useTranslation } from 'react-i18next';
-import { io } from 'socket.io-client';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 

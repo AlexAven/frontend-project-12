@@ -1,12 +1,15 @@
+import { io } from 'socket.io-client';
 import filter from 'leo-profanity';
 import { useTranslation } from 'react-i18next';
 import { Dropdown, ButtonGroup, Button } from 'react-bootstrap';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import {
   openDeleteChannelModal,
   setActiveChannel,
   openRenameChannelModal,
+  updateChannels,
 } from '../../features/chatSlice';
 import DeleteChannelModal from '../modals/DeleteChannelModal/DeleteChannelModal';
 import RenameChannelModal from '../modals/RenameChannelModal/RenameChannelModal';
@@ -26,6 +29,17 @@ const Channels = () => {
 
   filter.add(filter.getDictionary('en'));
   filter.add(filter.getDictionary('ru'));
+
+  useEffect(() => {
+    const socket = io();
+    socket.on('removeChannel', (payload) => {
+      dispatch(updateChannels(payload));
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, [dispatch]);
 
   return (
     <>
