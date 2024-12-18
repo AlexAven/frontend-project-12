@@ -73,19 +73,21 @@ const Channels = () => {
             <li key={id} className="nav-item w-100">
               {removable ? (
                 <Dropdown as={ButtonGroup} className="d-flex">
-                  <Button
-                    className={`text-truncate w-100 text-start rounded-0 ${activeBtnClass} ${isActive ? 'active' : ''}`}
+                  <button
+                    className={`w-100 rounded-0 text-start text-truncate btn ${activeBtnClass}`}
+                    // className={`w-100 rounded-0 text-start text-truncate btn btn-secondary ${activeBtnClass} ${isActive ? 'active' : ''}`}
                     onClick={() => dispatch(setActiveChannel(index))}
                   >
                     <span className="me-1">#</span>
                     {censoredChannelName}
-                  </Button>
+                  </button>
 
                   <Dropdown.Toggle
                     split
                     variant={activeBtnClass}
                     id={`dropdown-split-${id}`}
-                    className={`rounded-0.5 ${isActive ? 'active' : ''}  ${isActive ? 'btn-secondary' : ''}`}
+                    className={`rounded-0.5 ${activeBtnClass}`}
+                    // className={`rounded-0.5 ${isActive ? 'active' : ''}  ${isActive ? 'btn-secondary' : ''}`}
                   >
                     <span className="visually-hidden">{t('chat.channels.properties')}</span>
                   </Dropdown.Toggle>
@@ -101,7 +103,7 @@ const Channels = () => {
               ) : (
                 <Button
                   type="button"
-                  className={`w-100 rounded-0 text-start btn ${activeBtnClass} ${isActive ? 'active' : ''}`}
+                  className={`w-100 rounded-0 text-start text-truncate btn ${activeBtnClass}`}
                   onClick={() => dispatch(setActiveChannel(index))}
                 >
                   <span className="me-1">#</span>
