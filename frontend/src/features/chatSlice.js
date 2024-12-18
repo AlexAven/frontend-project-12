@@ -182,6 +182,10 @@ const chatSlice = createSlice({
         ? (state.ui.activeChannelIndex = 0)
         : (state.ui.activeChannelIndex = state.channels.ids.indexOf(currentChannelId));
     },
+    addChannel: (state, { payload }) => {
+      state.channels.entities[payload.id] = payload;
+      state.channels.ids.push(payload.id);
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -222,10 +226,10 @@ const chatSlice = createSlice({
           ? 'validation.connectionError'
           : 'validation.unknownError';
       })
-      .addCase(postChannel.fulfilled, (state, { payload }) => {
-        state.channels.entities[payload.id] = payload;
-        state.channels.ids.push(payload.id);
-        state.ui.activeChannelIndex = state.channels.ids.indexOf(payload.id);
+      .addCase(postChannel.fulfilled, (state) => {
+        // state.channels.entities[payload.id] = payload;
+        // state.channels.ids.push(payload.id);
+        state.ui.activeChannelIndex = state.channels.ids.length - 1;
         state.ui.modals.addChannel.isChannelAdded = true;
         state.error = null;
       })
@@ -234,16 +238,16 @@ const chatSlice = createSlice({
           ? 'validation.connectionError'
           : 'validation.unknownError';
       })
-      .addCase(deleteChannel.fulfilled, (state, { payload }) => {
-        const { id } = payload;
-        const deletedChannelIndex = state.channels.ids.indexOf(id);
-        const currentChannelIndex = state.ui.activeChannelIndex;
-        const currentChannelId = state.channels.ids[currentChannelIndex];
-        delete state.channels.entities[id];
-        state.channels.ids = state.channels.ids.filter((item) => item !== id);
-        deletedChannelIndex === currentChannelIndex
-          ? (state.ui.activeChannelIndex = 0)
-          : (state.ui.activeChannelIndex = state.channels.ids.indexOf(currentChannelId));
+      .addCase(deleteChannel.fulfilled, (state) => {
+        // const { id } = payload;
+        // const deletedChannelIndex = state.channels.ids.indexOf(id);
+        // const currentChannelIndex = state.ui.activeChannelIndex;
+        // const currentChannelId = state.channels.ids[currentChannelIndex];
+        // delete state.channels.entities[id];
+        // state.channels.ids = state.channels.ids.filter((item) => item !== id);
+        // deletedChannelIndex === currentChannelIndex
+        //   ? (state.ui.activeChannelIndex = 0)
+        //   : (state.ui.activeChannelIndex = state.channels.ids.indexOf(currentChannelId));
         state.ui.modals.deleteChannel.isChannelDeleted = true;
         state.error = null;
       })
@@ -287,4 +291,5 @@ export const {
   setChannelDeleted,
   setChannelRenamed,
   updateChannels,
+  addChannel,
 } = chatSlice.actions;

@@ -10,6 +10,7 @@ import {
   setActiveChannel,
   openRenameChannelModal,
   updateChannels,
+  addChannel,
 } from '../../features/chatSlice';
 import DeleteChannelModal from '../modals/DeleteChannelModal/DeleteChannelModal';
 import RenameChannelModal from '../modals/RenameChannelModal/RenameChannelModal';
@@ -30,8 +31,26 @@ const Channels = () => {
   filter.add(filter.getDictionary('en'));
   filter.add(filter.getDictionary('ru'));
 
+  // useEffect(() => {
+  //   const socket = io();
+  //   socket.on('newChannel', (payload) => {
+  //     if (!channels[payload.id]) {
+  //       dispatch(addChannel(payload));
+  //     }
+  //   });
+
+  //   return () => {
+  //     socket.disconnect();
+  //   };
+  // }, [dispatch, channels]);
+
   useEffect(() => {
     const socket = io();
+    socket.on('newChannel', (payload) => {
+      if (!channels[payload.id]) {
+        dispatch(addChannel(payload));
+      }
+    });
     socket.on('removeChannel', (payload) => {
       dispatch(updateChannels(payload));
     });
