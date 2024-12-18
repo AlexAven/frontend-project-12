@@ -33,15 +33,13 @@ const Channels = () => {
   useEffect(() => {
     const socket = io();
     socket.on('removeChannel', (payload) => {
-      if (channels[payload.id]) {
-        dispatch(updateChannels(payload));
-      }
+      dispatch(updateChannels(payload));
     });
 
     return () => {
       socket.disconnect();
     };
-  }, [dispatch]);
+  }, [dispatch, channels]);
 
   return (
     <>
