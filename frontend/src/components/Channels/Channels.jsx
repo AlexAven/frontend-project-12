@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { io } from 'socket.io-client';
 import filter from 'leo-profanity';
 import { useTranslation } from 'react-i18next';
