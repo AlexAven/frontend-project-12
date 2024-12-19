@@ -9,7 +9,7 @@ const DeleteChannelModal = () => {
   const dispatch = useDispatch();
 
   const messagesState = useSelector((state) => state.chat.messages);
-  const id = useSelector((state) => state.chat.ui.modals.deleteChannel.channelId);
+  const channelId = useSelector((state) => state.chat.ui.modals.deleteChannel.channelId);
   const isOpen = useSelector((state) => state.chat.ui.modals.deleteChannel.isOpen);
 
   const handleClose = () => {
@@ -27,6 +27,7 @@ const DeleteChannelModal = () => {
     channelMessagesIds.map((item) => {
       const message = messagesState.entities[item];
       dispatch(deleteMessage(message.id));
+      return message.id;
     });
   };
 
@@ -44,7 +45,7 @@ const DeleteChannelModal = () => {
         </Button>
         <Button
           onClick={() => {
-            handleDelete(id);
+            handleDelete(channelId);
           }}
           variant="danger"
         >

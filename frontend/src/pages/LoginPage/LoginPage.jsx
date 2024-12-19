@@ -32,7 +32,7 @@ const LoginPage = () => {
             <div className=" card-footer p-4">
               <div className="login__footer-text text-center">
                 <span className="mx-2">{t('loginPage.hasAccount')}</span>
-                <Link to={'/signup'}>{t('loginPage.regLink')}</Link>
+                <Link to="/signup">{t('loginPage.regLink')}</Link>
               </div>
             </div>
           </div>

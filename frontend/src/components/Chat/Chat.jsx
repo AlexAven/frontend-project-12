@@ -16,7 +16,7 @@ const Chat = () => {
   filter.add(filter.getDictionary('ru'));
 
   const chatState = useSelector((state) => state.chat);
-  const { activeChannelIndex: activeChannelIndex } = chatState.ui;
+  const { activeChannelIndex } = chatState.ui;
   const currentChannelId = chatState.channels.ids[activeChannelIndex];
   const currentChannel = chatState.channels.entities[currentChannelId];
   const channelMessagesIndex = chatState.messages.ids.filter(
@@ -51,7 +51,9 @@ const Chat = () => {
             const { id, username, body } = message;
             return (
               <div key={id} className="text-break mb-2">
-                <b>{username}:</b> {body}
+                <b>{username}:</b>
+                {' '}
+                {body}
               </div>
             );
           })}

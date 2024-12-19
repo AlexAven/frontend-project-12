@@ -27,10 +27,10 @@ const MainPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const serverErrors = useSelector((state) => state.chat.error);
-  const channelAdded = useSelector((state) => state.chat.ui.modals.addChannel.isChannelAdded);
-  const channelDeleted = useSelector((state) => state.chat.ui.modals.deleteChannel.isChannelDeleted);
-  const channelRenamed = useSelector((state) => state.chat.ui.modals.renameChannel.isChannelRenamed);
+  const serverErrors = useSelector(state => state.chat.error);
+  const channelAdded = useSelector(state => state.chat.ui.modals.addChannel.isChannelAdded);
+  const channelDeleted = useSelector(state => state.chat.ui.modals.deleteChannel.isChannelDeleted);
+  const channelRenamed = useSelector(state => state.chat.ui.modals.renameChannel.isChannelRenamed);
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem('userData'));
@@ -101,7 +101,7 @@ const MainPage = () => {
               className="p-0 text-primary btn btn-group-vertical"
               onClick={handleOpenModal}
             >
-              <AddBtn size={'1.6rem'} />
+              <AddBtn size="1.6rem" />
               <span className="visually-hidden">{t('chat.channels.addBtn')}</span>
             </button>
           </div>

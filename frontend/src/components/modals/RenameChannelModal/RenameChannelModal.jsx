@@ -14,12 +14,12 @@ const RenameChannelModal = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const id = useSelector((state) => state.chat.ui.modals.renameChannel.channelId);
+  const modalId = useSelector((state) => state.chat.ui.modals.renameChannel.channelId);
   const validation = useSelector((state) => state.validation.addingChannel);
   const channelIds = useSelector((state) => state.chat.channels.ids);
   const channels = useSelector((state) => state.chat.channels.entities);
   const channelNames = channelIds.map((id) => channels[id].name);
-  const currentName = channels[id]?.name;
+  const currentName = channels[modalId]?.name;
   const isOpen = useSelector((state) => state.chat.ui.modals.renameChannel.isOpen);
 
   const customMessages = {
@@ -50,7 +50,7 @@ const RenameChannelModal = () => {
         .validate(channelName)
         .then(() => {
           dispatch(addingChannelSucceeded(channelName));
-          dispatch(renameChannel({ id, channelName }));
+          dispatch(renameChannel({ id: modalId, channelName }));
           handleClose();
         })
         .catch((error) => dispatch(addingChannelFailed(error)));
@@ -65,7 +65,7 @@ const RenameChannelModal = () => {
   const inputRef = useRef(null);
 
   useEffect(() => {
-    if (isOpen && id) {
+    if (isOpen && modalId) {
       formik.setValues({ name: currentName });
 
       setTimeout(() => {
@@ -73,7 +73,7 @@ const RenameChannelModal = () => {
         inputRef.current.select();
       }, 0);
     }
-  }, [isOpen, currentName, id]);
+  }, [isOpen, currentName, modalId]);
 
   return (
     <Modal show={isOpen} onHide={handleClose} centered>

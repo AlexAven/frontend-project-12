@@ -14,11 +14,11 @@ const App = () => (
     <Route path="/" element={<Layout />}>
       <Route
         index
-        element={
+        element={(
           <RequireAuth>
             <MainPage />
           </RequireAuth>
-        }
+        )}
       />
       <Route path="login" element={<LoginPage />} />
       <Route path="signup" element={<SignupPage />} />

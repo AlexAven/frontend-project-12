@@ -33,7 +33,7 @@ const initialState = {
 };
 
 export const getChannels = createAsyncThunk('@@chat/get-channels', async (_, { getState }) => {
-  const token = getState().login.entities.token;
+  const { token } = getState().login.entities;
   const res = await axios.get('/api/v1/channels', {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -45,7 +45,7 @@ export const getChannels = createAsyncThunk('@@chat/get-channels', async (_, { g
 });
 
 export const getMessages = createAsyncThunk('@@chat/get-messages', async (_, { getState }) => {
-  const token = getState().login.entities.token;
+  const { token } = getState().login.entities;
   const res = await axios.get('/api/v1/messages', {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -56,11 +56,11 @@ export const getMessages = createAsyncThunk('@@chat/get-messages', async (_, { g
 });
 
 export const postMessage = createAsyncThunk('@@chat/send-message', async (userMessage, { getState }) => {
-  const loginState = getState().login;
-  const chatState = getState().chat;
-  const activeChannelIndex = chatState.ui.activeChannelIndex;
-  const currentChannelId = chatState.channels.ids[activeChannelIndex];
-  const { token, username } = loginState.entities;
+  const { entities: loginEntities } = getState().login;
+  const { channels, ui } = getState().chat;
+  const activeChannelIndex = ui.activeChannelIndex;
+  const currentChannelId = channels.ids[activeChannelIndex];
+  const { token, username } = loginEntities;
 
   const newMessage = { body: userMessage, channelId: currentChannelId, username };
 
@@ -74,7 +74,7 @@ export const postMessage = createAsyncThunk('@@chat/send-message', async (userMe
 });
 
 export const postChannel = createAsyncThunk('@@chat/add-channel', async (channelName, { getState }) => {
-  const token = getState().login.entities.token;
+  const { token } = getState().login.entities;
   const res = await axios.post('/api/v1/channels', channelName, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -87,7 +87,7 @@ export const postChannel = createAsyncThunk('@@chat/add-channel', async (channel
 export const deleteChannel = createAsyncThunk(
   '@@chat/delete-channel',
   async (channelId, { getState }) => {
-    const token = getState().login.entities.token;
+    const { token } = getState().login.entities;
     const res = await axios.delete(`/api/v1/channels/${channelId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -101,7 +101,7 @@ export const deleteChannel = createAsyncThunk(
 export const renameChannel = createAsyncThunk(
   '@@chat/rename-channel',
   async ({ id, channelName }, { getState }) => {
-    const token = getState().login.entities.token;
+    const { token } = getState().login.entities;
     const res = await axios.patch(`/api/v1/channels/${id}`, channelName, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -115,7 +115,7 @@ export const renameChannel = createAsyncThunk(
 export const deleteMessage = createAsyncThunk(
   '@@chat/delete-message',
   async (messageId, { getState }) => {
-    const token = getState().login.entities.token;
+    const { token } = getState().login.entities;
     const res = await axios.delete(`/api/v1/messages/${messageId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -144,8 +144,8 @@ const chatSlice = createSlice({
     closeAddChannelModal: (state) => {
       state.ui.modals.addChannel.isOpen = false;
     },
-    setChannelAdded(state, action) {
-      state.ui.modals.addChannel.isChannelAdded = action.payload;
+    setChannelAdded(state, { payload }) {
+      state.ui.modals.addChannel.isChannelAdded = payload;
     },
     openDeleteChannelModal: (state, { payload }) => {
       state.ui.modals.deleteChannel.isOpen = true;
@@ -154,8 +154,8 @@ const chatSlice = createSlice({
     closeDeleteChannelModal: (state) => {
       state.ui.modals.deleteChannel.isOpen = false;
     },
-    setChannelDeleted(state, action) {
-      state.ui.modals.deleteChannel.isChannelDeleted = action.payload;
+    setChannelDeleted(state, { payload }) {
+      state.ui.modals.deleteChannel.isChannelDeleted = payload;
     },
     openRenameChannelModal: (state, { payload }) => {
       state.ui.modals.renameChannel.isOpen = true;
@@ -164,8 +164,8 @@ const chatSlice = createSlice({
     closeRenameChannelModal: (state) => {
       state.ui.modals.renameChannel.isOpen = false;
     },
-    setChannelRenamed: (state, action) => {
-      state.ui.modals.renameChannel.isChannelRenamed = action.payload;
+    setChannelRenamed: (state, { payload }) => {
+      state.ui.modals.renameChannel.isChannelRenamed = payload;
     },
     clearError: (state) => {
       state.error = null;

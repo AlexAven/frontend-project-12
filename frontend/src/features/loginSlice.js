@@ -12,39 +12,45 @@ const initialState = {
 
 export const loginUser = createAsyncThunk('@@login/login-user', async (userData, thunkAPI) => {
   try {
+    const { username, password } = userData;
     const res = await axios.post('/api/v1/login', {
-      username: userData.username,
-      password: userData.password,
+      username,
+      password,
     });
     const data = res.data;
 
     return data;
   } catch (error) {
-    if (error.status === 500) {
+    if (error.response && error.response.status === 500) {
       return thunkAPI.rejectWithValue('validation.connectionError');
     }
-    if (error.status === 401) {
+    if (error.response && error.response.status === 401) {
       return thunkAPI.rejectWithValue('validation.loginError');
     }
+
+    return thunkAPI.rejectWithValue('validation.unknownError');
   }
 });
 
 export const signupUser = createAsyncThunk('@@login/signup-user', async (newUserData, thunkAPI) => {
   try {
+    const { username, password } = newUserData;
     const res = await axios.post('/api/v1/signup', {
-      username: newUserData.username,
-      password: newUserData.password,
+      username,
+      password,
     });
     const data = res.data;
 
     return data;
   } catch (error) {
-    if (error.status === 500) {
+    if (error.response && error.response.status === 500) {
       return thunkAPI.rejectWithValue('validation.connectionError');
     }
-    if (error.status === 409) {
+    if (error.response && error.response.status === 409) {
       return thunkAPI.rejectWithValue('validation.existingUser');
     }
+
+    return thunkAPI.rejectWithValue('validation.unknownError');
   }
 });
 

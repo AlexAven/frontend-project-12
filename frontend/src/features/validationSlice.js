@@ -12,12 +12,24 @@ const validationSlice = createSlice({
   initialState,
   reducers: {
     addingChannelFailed: (state, { payload }) => {
-      state.addingChannel.status = 'failed';
-      state.addingChannel.error = payload.message;
+      return {
+        ...state,
+        addingChannel: {
+          ...state.addingChannel,
+          status: 'failed',
+          error: payload.message,
+        },
+      };
     },
     addingChannelSucceeded: (state) => {
-      state.addingChannel.status = 'succeeded';
-      state.addingChannel.error = '';
+      return {
+        ...state,
+        addingChannel: {
+          ...state.addingChannel,
+          status: 'succeeded',
+          error: '',
+        },
+      };
     },
   },
 });
