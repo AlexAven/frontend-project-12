@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-param-reassign */
 import axios from 'axios';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
@@ -39,7 +41,7 @@ export const getChannels = createAsyncThunk('@@chat/get-channels', async (_, { g
       Authorization: `Bearer ${token}`,
     },
   });
-  const data = res.data;
+  const { data } = res;
 
   return data;
 });
@@ -51,14 +53,14 @@ export const getMessages = createAsyncThunk('@@chat/get-messages', async (_, { g
       Authorization: `Bearer ${token}`,
     },
   });
-  const data = res.data;
+  const { data } = res;
   return data;
 });
 
 export const postMessage = createAsyncThunk('@@chat/send-message', async (userMessage, { getState }) => {
   const { entities: loginEntities } = getState().login;
   const { channels, ui } = getState().chat;
-  const activeChannelIndex = ui.activeChannelIndex;
+  const { activeChannelIndex } = ui;
   const currentChannelId = channels.ids[activeChannelIndex];
   const { token, username } = loginEntities;
 

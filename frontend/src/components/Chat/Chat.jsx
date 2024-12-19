@@ -46,12 +46,16 @@ const Chat = () => {
         <span className="text-muted">{`${messagesCounter} ${t('chat.messagesCount')}`}</span>
       </div>
       <div id="messages-box" className="chat-messages overflow-auto px-5">
-        {channelMessages &&
+        {channelMessages
+          &&
           channelMessages.map((message) => {
             const { id, username, body } = message;
             return (
               <div key={id} className="text-break mb-2">
-                <b>{username}:</b>
+                <b>
+                  {username}
+                  :
+                </b>
                 {' '}
                 {body}
               </div>

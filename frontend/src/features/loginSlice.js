@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import axios from 'axios';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
@@ -17,7 +18,7 @@ export const loginUser = createAsyncThunk('@@login/login-user', async (userData,
       username,
       password,
     });
-    const data = res.data;
+    const { data } = res;
 
     return data;
   } catch (error) {
@@ -39,7 +40,7 @@ export const signupUser = createAsyncThunk('@@login/signup-user', async (newUser
       username,
       password,
     });
-    const data = res.data;
+    const { data } = res;
 
     return data;
   } catch (error) {
