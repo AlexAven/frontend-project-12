@@ -61,6 +61,7 @@ const Channels = () => {
               {removable ? (
                 <Dropdown as={ButtonGroup} className="d-flex">
                   <button
+                    type="button"
                     className={`w-100 rounded-0 text-start text-truncate btn ${activeBtnClass}`}
                     onClick={() => dispatch(setActiveChannel(index))}
                   >

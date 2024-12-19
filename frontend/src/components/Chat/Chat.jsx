@@ -14,7 +14,7 @@ const Chat = () => {
   filter.add(filter.getDictionary('ru'));
 
   const chatState = useSelector((state) => state.chat);
-  const activeChannelIndex = chatState.ui.activeChannelIndex;
+  const { activeChannelIndex: activeChannelIndex } = chatState.ui;
   const currentChannelId = chatState.channels.ids[activeChannelIndex];
   const currentChannel = chatState.channels.entities[currentChannelId];
   const channelMessagesIndex = chatState.messages.ids.filter(

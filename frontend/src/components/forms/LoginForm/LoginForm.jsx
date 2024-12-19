@@ -26,7 +26,7 @@ const CustomForm = () => {
         <input
           name="username"
           autoComplete="username"
-          required={true}
+          required
           placeholder="Ваш ник"
           id="username"
           className={`form-control ${error ? 'is-invalid' : ''}`}
@@ -39,7 +39,7 @@ const CustomForm = () => {
         <input
           name="password"
           autoComplete="current-password"
-          required={true}
+          required
           placeholder="Пароль"
           type="password"
           id="password"

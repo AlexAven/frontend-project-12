@@ -50,7 +50,7 @@ const Input = () => {
             ref={messageInputRef}
           />
           <button type="submit" disabled="" className="btn btn-group-vertical">
-            <SubmitBtn size={'1.5rem'} />
+            <SubmitBtn size="1.5rem" />
             <span className="visually-hidden">{t('chat.form.sendBtn')}</span>
           </button>
         </div>
