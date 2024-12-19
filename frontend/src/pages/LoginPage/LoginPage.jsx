@@ -1,13 +1,14 @@
 import { useTranslation } from 'react-i18next';
-import { useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
 import Form from '../../components/forms/LoginForm/LoginForm';
 
 const LoginPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+
   const token = useSelector((state) => state.login.entities?.token);
 
   useEffect(() => {

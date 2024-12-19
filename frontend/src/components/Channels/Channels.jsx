@@ -31,19 +31,6 @@ const Channels = () => {
   filter.add(filter.getDictionary('en'));
   filter.add(filter.getDictionary('ru'));
 
-  // useEffect(() => {
-  //   const socket = io();
-  //   socket.on('newChannel', (payload) => {
-  //     if (!channels[payload.id]) {
-  //       dispatch(addChannel(payload));
-  //     }
-  //   });
-
-  //   return () => {
-  //     socket.disconnect();
-  //   };
-  // }, [dispatch, channels]);
-
   useEffect(() => {
     const socket = io();
     socket.on('newChannel', (payload) => {
@@ -75,7 +62,6 @@ const Channels = () => {
                 <Dropdown as={ButtonGroup} className="d-flex">
                   <button
                     className={`w-100 rounded-0 text-start text-truncate btn ${activeBtnClass}`}
-                    // className={`w-100 rounded-0 text-start text-truncate btn btn-secondary ${activeBtnClass} ${isActive ? 'active' : ''}`}
                     onClick={() => dispatch(setActiveChannel(index))}
                   >
                     <span className="me-1">#</span>
@@ -87,7 +73,6 @@ const Channels = () => {
                     variant={activeBtnClass}
                     id={`dropdown-split-${id}`}
                     className={`rounded-0.5 ${activeBtnClass}`}
-                    // className={`rounded-0.5 ${isActive ? 'active' : ''}  ${isActive ? 'btn-secondary' : ''}`}
                   >
                     <span className="visually-hidden">{t('chat.channels.properties')}</span>
                   </Dropdown.Toggle>

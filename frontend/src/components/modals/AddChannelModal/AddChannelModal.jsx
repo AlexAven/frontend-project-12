@@ -1,10 +1,10 @@
 import * as yup from 'yup';
 import { setLocale } from 'yup';
+import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { Modal, Button, Form } from 'react-bootstrap';
-import { useFormik } from 'formik';
-import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useRef } from 'react';
 
 import { addingChannelSucceeded, addingChannelFailed } from '../../../features/validationSlice';
 import { closeAddChannelModal, postChannel } from '../../../features/chatSlice';
@@ -12,11 +12,11 @@ import { closeAddChannelModal, postChannel } from '../../../features/chatSlice';
 const AddChannelModal = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+
   const validation = useSelector((state) => state.validation.addingChannel);
   const channelIds = useSelector((state) => state.chat.channels.ids);
   const channels = useSelector((state) => state.chat.channels.entities);
   const channelNames = channelIds.map((id) => channels[id].name);
-
   const isOpen = useSelector((state) => state.chat.ui.modals.addChannel.isOpen);
 
   const customMessages = {

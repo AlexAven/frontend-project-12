@@ -40,7 +40,7 @@ const Chat = () => {
     <>
       <div className="bg-light mb-4 p-3 shadow-sm small">
         <p className="m-0">
-          <b>{`# ${censoredChannelName || 'Канал не выбран'}`}</b>
+          <b>{`# ${censoredChannelName || t('chat.channels.noChannels')}`}</b>
         </p>
         <span className="text-muted">{`${messagesCounter} ${t('chat.messagesCount')}`}</span>
       </div>

@@ -1,9 +1,9 @@
+import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useFormik } from 'formik';
-
 import { CgArrowRightR as SubmitBtn } from 'react-icons/cg';
+
 import { postMessage } from '../../../features/chatSlice';
 
 const Input = () => {

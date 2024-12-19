@@ -32,6 +32,7 @@ const resources = {
       chat: {
         channels: {
           title: 'Каналы',
+          noChannels: 'Канал не выбран',
           dropdown: {
             renameBtn: 'Переименовать',
             deleteBtn: 'Удалить',

@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as yup from 'yup';
 import { setLocale } from 'yup';
+import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { Modal, Button, Form } from 'react-bootstrap';
-import { useFormik } from 'formik';
-import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useRef } from 'react';
 
 import { addingChannelSucceeded, addingChannelFailed } from '../../../features/validationSlice';
 import { closeRenameChannelModal, renameChannel } from '../../../features/chatSlice';
@@ -20,7 +20,6 @@ const RenameChannelModal = () => {
   const channels = useSelector((state) => state.chat.channels.entities);
   const channelNames = channelIds.map((id) => channels[id].name);
   const currentName = channels[id]?.name;
-
   const isOpen = useSelector((state) => state.chat.ui.modals.renameChannel.isOpen);
 
   const customMessages = {

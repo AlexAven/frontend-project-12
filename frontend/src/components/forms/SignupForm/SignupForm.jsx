@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 import { setLocale } from 'yup';
-import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { signupUser } from '../../../features/loginSlice';
