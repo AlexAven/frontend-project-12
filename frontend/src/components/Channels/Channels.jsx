@@ -16,8 +16,10 @@ import DeleteChannelModal from '../modals/DeleteChannelModal/DeleteChannelModal'
 import RenameChannelModal from '../modals/RenameChannelModal/RenameChannelModal';
 
 const Channels = () => {
+  const socket = io();
   const { t } = useTranslation();
   const dispatch = useDispatch();
+
   const channels = useSelector((state) => state.chat.channels);
   const activeChannel = useSelector((state) => state.chat.ui.activeChannelIndex);
 
@@ -32,7 +34,6 @@ const Channels = () => {
   filter.add(filter.getDictionary('ru'));
 
   useEffect(() => {
-    const socket = io();
     socket.on('newChannel', (payload) => {
       if (!channels[payload.id]) {
         dispatch(addChannel(payload));

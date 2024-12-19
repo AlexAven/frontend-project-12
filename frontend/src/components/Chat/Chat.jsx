@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { receiveMessage } from '../../features/chatSlice';
 
 const Chat = () => {
+  const socket = io();
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -25,7 +26,6 @@ const Chat = () => {
   const censoredChannelName = filter.clean(currentChannel?.name);
 
   useEffect(() => {
-    const socket = io();
     socket.on('newMessage', (payload) => {
       const sensoredMessage = { ...payload, body: filter.clean(payload.body) };
       dispatch(receiveMessage(sensoredMessage));
